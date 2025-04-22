@@ -1,14 +1,15 @@
-import { Container, Typography } from '@mui/material'
+import { Container } from '@mui/material'
+import Carousel from '../components/Carousel'
+import Categories from '../components/Categories'
 
 export default function Home() {
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Bem-vindo à BotzStore!
-      </Typography>
-      <Typography variant="body1">
-        Explore os melhores componentes e kits para robótica.
-      </Typography>
-    </Container>
+    <>
+      <Categories />
+      <Carousel />
+      <Container>
+        {/* Conteúdo adicional da página */}
+      </Container>
+    </>
   )
 }
