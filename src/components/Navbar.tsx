@@ -9,12 +9,12 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
   const navigate = useNavigate()
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: 'background.default', color: 'primary.main', paddingX: 2 }}>
+    <AppBar position="fixed" sx={{ backgroundColor: 'background.default', color: 'secundary.main', paddingX: 2 }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         {/* Logo */}
         <Box
           component="img"
-          src="/logo.png"
+          src="/logo.svg"
           alt="BotzStore"
           sx={{ height: 50, cursor: 'pointer' }}
           onClick={onMenuClick}
