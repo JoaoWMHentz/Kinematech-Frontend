@@ -1,6 +1,46 @@
-import { Box, Button, TextField, Typography, Divider, Paper } from '@mui/material'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import para redirecionamento
+import { Box, Button, TextField, Typography, Divider, Paper } from '@mui/material';
+import { login, register } from '../services/authService';
 
 export default function AuthPage() {
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [registerName, setRegisterName] = useState('');
+  const [registerEmail, setRegisterEmail] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const navigate = useNavigate(); // Hook para redirecionamento
+
+  const handleLogin = async () => {
+    try {
+      const token = await login(loginEmail, loginPassword);
+      console.log('Login bem-sucedido:', token);
+
+      // Salvar o token na sessão
+      sessionStorage.setItem('authToken', token);
+
+      // Redirecionar para a página "Home"
+      navigate('/home');
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  const handleRegister = async () => {
+    if (registerPassword !== confirmPassword) {
+      alert('As senhas não coincidem');
+      return;
+    }
+    try {
+      const response = await register(registerName, registerEmail, registerPassword);
+      console.log('Registro bem-sucedido:', response);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -42,6 +82,8 @@ export default function AuthPage() {
             size="small"
             fullWidth
             sx={{ marginBottom: 2 }}
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
           />
           <TextField
             label="Senha"
@@ -50,8 +92,16 @@ export default function AuthPage() {
             size="small"
             fullWidth
             sx={{ marginBottom: 2 }}
+            value={loginPassword}
+            onChange={(e) => setLoginPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" fullWidth>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ color: 'white' }}
+            onClick={handleLogin}
+          >
             Entrar
           </Button>
         </Box>
@@ -79,6 +129,8 @@ export default function AuthPage() {
             size="small"
             fullWidth
             sx={{ marginBottom: 2 }}
+            value={registerName}
+            onChange={(e) => setRegisterName(e.target.value)}
           />
           <TextField
             label="Email"
@@ -86,6 +138,8 @@ export default function AuthPage() {
             size="small"
             fullWidth
             sx={{ marginBottom: 2 }}
+            value={registerEmail}
+            onChange={(e) => setRegisterEmail(e.target.value)}
           />
           <TextField
             label="Senha"
@@ -94,6 +148,8 @@ export default function AuthPage() {
             size="small"
             fullWidth
             sx={{ marginBottom: 2 }}
+            value={registerPassword}
+            onChange={(e) => setRegisterPassword(e.target.value)}
           />
           <TextField
             label="Confirmar Senha"
@@ -102,12 +158,20 @@ export default function AuthPage() {
             size="small"
             fullWidth
             sx={{ marginBottom: 2 }}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" fullWidth>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ color: 'white' }}
+            onClick={handleRegister}
+          >
             Cadastrar
           </Button>
         </Box>
       </Paper>
     </Box>
-  )
+  );
 }
