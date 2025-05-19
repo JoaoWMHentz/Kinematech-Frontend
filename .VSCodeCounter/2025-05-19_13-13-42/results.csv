@@ -1,0 +1,33 @@
+"filename", "language", "JSON with Comments", "JSON", "Markdown", "XML", "TypeScript", "HTML", "PostCSS", "TypeScript JSX", "comment", "blank", "total"
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/README.md", "Markdown", 0, 0, 26, 0, 0, 0, 0, 0, 0, 21, 47
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/package-lock.json", "JSON", 0, 18243, 0, 0, 0, 0, 0, 0, 0, 1, 18244
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/package.json", "JSON", 0, 55, 0, 0, 0, 0, 0, 0, 0, 1, 56
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/public/index.html", "HTML", 0, 0, 0, 0, 0, 20, 0, 0, 23, 1, 44
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/public/logo.svg", "XML", 0, 0, 0, 75, 0, 0, 0, 0, 0, 1, 76
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/public/manifest.json", "JSON", 0, 25, 0, 0, 0, 0, 0, 0, 0, 1, 26
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/App.css", "PostCSS", 0, 0, 0, 0, 0, 0, 33, 0, 0, 6, 39
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/App.test.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 8, 0, 2, 10
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/App.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 31, 0, 4, 35
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/components/Carousel.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 64, 0, 3, 67
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/components/Categories.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 43, 0, 2, 45
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/components/Navbar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 73, 4, 7, 84
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/components/RouteGuard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 12, 0, 4, 16
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/components/Sidebar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 46, 0, 3, 49
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/index.css", "PostCSS", 0, 0, 0, 0, 0, 0, 12, 0, 0, 2, 14
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 16, 0, 1, 17
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/logo.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/pages/AccountPage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 127, 4, 7, 138
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/pages/AuthPage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 163, 5, 9, 177
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/pages/Home.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 13, 1, 2, 16
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/pages/ProductCreatePage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 195, 0, 9, 204
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/pages/Products.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 13, 0, 2, 15
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/pages/ProductsPage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 98, 5, 7, 110
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/react-app-env.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/reportWebVitals.ts", "TypeScript", 0, 0, 0, 0, 13, 0, 0, 0, 0, 3, 16
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/routes/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 34, 2, 3, 39
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/services/ProductService.ts", "TypeScript", 0, 0, 0, 0, 30, 0, 0, 0, 1, 5, 36
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/services/authService.ts", "TypeScript", 0, 0, 0, 0, 25, 0, 0, 0, 2, 3, 30
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/setupTests.ts", "TypeScript", 0, 0, 0, 0, 1, 0, 0, 0, 4, 1, 6
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/src/theme-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 38, 0, 5, 43
+"/home/joao/Documents/Repositories/BotzStore/botzstore_frontend/tsconfig.json", "JSON with Comments", 26, 0, 0, 0, 0, 0, 0, 0, 0, 1, 27
+"Total", "-", 26, 18323, 26, 76, 69, 20, 45, 974, 52, 118, 19729

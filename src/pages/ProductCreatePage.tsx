@@ -15,14 +15,17 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { ProductService, Product } from '../services/ProductService';
+import Autocomplete from '@mui/material/Autocomplete';
+import { ProductService, Product, Category } from '../services/ProductService';
+import { Margin } from '@mui/icons-material';
 
 export default function ProductCreatePage() {
   const [product, setProduct] = useState<Product>({
+    id: '',
     name: '',
     description: '',
     price: 0,
-    categoryId: 0,
+    category: { id: 0, name: '' },
     thumbnail: '',
     photos: [],
     showOnHomepage: false,
@@ -30,6 +33,7 @@ export default function ProductCreatePage() {
   });
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = (field: keyof Product, value: any) => {
@@ -41,10 +45,11 @@ export default function ProductCreatePage() {
       await ProductService.create(product);
       alert('Produto cadastrado com sucesso!');
       setProduct({
+        id: '',
         name: '',
         description: '',
         price: 0,
-        categoryId: 0,
+        category: { id: 0, name: '' },
         thumbnail: '',
         photos: [],
         showOnHomepage: false,
@@ -67,22 +72,85 @@ export default function ProductCreatePage() {
     }
   };
 
+  const fetchCategories = async () => {
+    try {
+      const response = await ProductService.getCategories();
+      setCategories(response);
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao carregar as categorias.');
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
+  var filteredProducts = null
+  if(products.length > 0){
+     filteredProducts = products.filter((p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-  const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  }
+
+  const handleRowClick = (product: Product) => {
+    setProduct(product);
+  };
+
+  const handleImageUpload = (field: keyof Product, file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result) {
+        handleChange(field, reader.result.toString());
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleMultipleImageUpload = (files: FileList) => {
+    const promises = Array.from(files).map((file) => {
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.result) {
+            resolve(reader.result.toString());
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(promises).then((base64Images) => {
+      handleChange('photos', base64Images);
+    });
+  };
 
   return (
     <Box sx={{ padding: 4, backgroundColor: 'background.default', minHeight: '100vh' }}>
-      <Typography variant="h5" sx={{ marginBottom: 4, fontWeight: 'bold' }}>
+      <Typography variant="h5" sx={{ marginBottom: 4, fontWeight: 'bold', textAlign: 'center' }}>
         Cadastro de Produto
       </Typography>
-      <Paper sx={{ padding: 3, marginBottom: 4 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} {...({} as any)}>
+      <Paper sx={{ padding: 4, marginBottom: 4 }}>
+        <Grid container spacing={4}>
+          {/* Informações Básicas */}
+          <Grid size={12} item xs={12} {...({} as any)}>
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
+              Informações Básicas
+            </Typography>
+          </Grid>
+          <Grid item size={2} md={5} {...({} as any)}>
+            <TextField
+              fullWidth
+              label="ID do Produto"
+              value={product.id || ''}
+              InputProps={{
+                readOnly: true,
+                disabled: true,
+              }}
+            />
+          </Grid>
+          <Grid item size={2} md={5} {...({} as any)}>
             <TextField
               fullWidth
               label="Nome do Produto"
@@ -90,7 +158,7 @@ export default function ProductCreatePage() {
               onChange={(e) => handleChange('name', e.target.value)}
             />
           </Grid>
-          <Grid item xs={12} {...({} as any)}>
+          <Grid item size={4} {...({} as any)}>
             <TextField
               fullWidth
               label="Descrição"
@@ -98,7 +166,7 @@ export default function ProductCreatePage() {
               onChange={(e) => handleChange('description', e.target.value)}
             />
           </Grid>
-          <Grid item xs={12} md={6} {...({} as any)}>
+          <Grid item size={2} md={5} {...({} as any)}>
             <TextField
               fullWidth
               label="Preço"
@@ -107,32 +175,98 @@ export default function ProductCreatePage() {
               onChange={(e) => handleChange('price', parseFloat(e.target.value))}
             />
           </Grid>
-          <Grid item xs={12} md={6} {...({} as any)}>
-            <TextField
-              fullWidth
-              label="ID da Categoria"
-              type="number"
-              value={product.categoryId}
-              onChange={(e) => handleChange('categoryId', parseInt(e.target.value))}
+          <Grid item size={2} md={5} {...({} as any)}>
+            <Autocomplete
+              options={categories}
+              getOptionLabel={(option) => `${option.name}`}
+              renderInput={(params) => <TextField {...params} label="Categoria" />}
+              onChange={(event, value) => handleChange('category', { id: value?.id, name: value?.name })}
+              value={categories.find((cat) => cat.id === product.category.id) || null}
             />
           </Grid>
-          <Grid item xs={12} {...({} as any)}>
-            <TextField
-              fullWidth
-              label="Thumbnail (Base64)"
-              value={product.thumbnail}
-              onChange={(e) => handleChange('thumbnail', e.target.value)}
-            />
+
+          {/* Imagens */}
+          <Grid size={12} item xs={12} {...({} as any)}>
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
+              Imagens
+            </Typography>
           </Grid>
-          <Grid item xs={12} {...({} as any)}>
-            <TextField
-              fullWidth
-              label="Fotos Adicionais (Base64, separadas por vírgula)"
-              value={product.photos?.join(',')}
-              onChange={(e) => handleChange('photos', e.target.value.split(','))}
-            />
+          <Grid item size={2} md={6} {...({} as any)}>
+            <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
+              Thumbnail
+            </Typography>
+            <div>
+              {product.thumbnail && (
+                <img
+                  src={product.thumbnail}
+                  alt="Thumbnail"
+                  style={{ width: '100%', maxWidth: '150px', height: 'auto', objectFit: 'cover', marginBottom: '10px' }}
+                />
+              )}
+            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 1 }}>
+              <input
+                id="thumbnail-upload"
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={(e) => e.target.files && handleImageUpload('thumbnail', e.target.files[0])}
+              />
+            
+            </Box>
           </Grid>
-          <Grid item xs={12} {...({} as any)}>
+          <Grid item size={10} md={6} {...({} as any)}>
+            <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
+              Fotos Adicionais
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', marginBottom: 2 }}>
+              {product.photos?.map((photo, index) => (
+                <img
+                  key={index}
+                  src={photo}
+                  alt={`Foto ${index + 1}`}
+                  style={{ width: '100%', maxWidth: '150px', height: 'auto', objectFit: 'cover' }}
+                />
+              ))}
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 1 }}>
+              <input
+                id="photos-upload"
+                type="file"
+                accept="image/*"
+                multiple
+                style={{ display: 'none' }}
+                onChange={(e) => e.target.files && handleMultipleImageUpload(e.target.files)}
+              />
+            
+            </Box>
+          </Grid>
+          <Grid item size={12} md={6} {...({} as any)}>
+              <Button
+                sx={{ color: 'white' }}
+                variant="contained"
+                color="primary"
+                component="label"
+                htmlFor="thumbnail-upload"
+              >
+                Upload Thumbnail
+              </Button>
+                <Button
+                sx={{ color: 'white', marginLeft: 4 }}
+                variant="contained"
+                color="primary"
+                component="label"
+                htmlFor="photos-upload"
+              >
+                Upload Fotos Adicionais
+              </Button>
+          </Grid>
+          <Grid size={12} item xs={12} {...({} as any)}>
+            <Typography variant="h6" sx={{ marginBottom: 2 }}>
+              Configurações
+            </Typography>
+          </Grid>
+          <Grid item  size={12} {...({} as any)}>
             <FormControlLabel
               control={
                 <Switch
@@ -143,7 +277,7 @@ export default function ProductCreatePage() {
               label="Exibir na Página Inicial"
             />
           </Grid>
-          <Grid item xs={12} {...({} as any)}>
+          <Grid item size={12} {...({} as any)}>
             <TextField
               fullWidth
               label="Descrição Detalhada (HTML)"
@@ -153,14 +287,17 @@ export default function ProductCreatePage() {
               onChange={(e) => handleChange('detailedDescription', e.target.value)}
             />
           </Grid>
-          <Grid item xs={12} {...({} as any)}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              Cadastrar Produto
+
+          {/* Botão de Ação */}
+          <Grid size={12} item xs={12} sx={{ textAlign: 'right' }} {...({} as any)}>
+            <Button  sx={{ color: 'white' }} variant="contained" color="primary" onClick={handleSubmit}>
+              {product.id ? 'Atualizar Produto' : 'Cadastrar Produto'}
             </Button>
           </Grid>
         </Grid>
       </Paper>
 
+      {/* Tabela de Produtos */}
       <Typography variant="h6" sx={{ marginBottom: 2 }}>
         Produtos Cadastrados
       </Typography>
@@ -171,7 +308,7 @@ export default function ProductCreatePage() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Button variant="contained" color="primary" onClick={fetchProducts}>
+        <Button   sx={{ color: 'white' }} variant="contained" color="primary" onClick={fetchProducts}>
           Atualizar
         </Button>
       </Box>
@@ -187,12 +324,12 @@ export default function ProductCreatePage() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredProducts.map((product) => (
-              <TableRow key={product.name}>
+            {filteredProducts?.map((product: any) => (
+              <TableRow key={product.id} onClick={() => handleRowClick(product)} style={{ cursor: 'pointer' }}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.description}</TableCell>
                 <TableCell>{product.price}</TableCell>
-                <TableCell>{product.categoryId}</TableCell>
+                <TableCell>{product.category.name}</TableCell>
                 <TableCell>{product.showOnHomepage ? 'Sim' : 'Não'}</TableCell>
               </TableRow>
             ))}

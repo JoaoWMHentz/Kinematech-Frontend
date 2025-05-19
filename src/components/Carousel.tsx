@@ -40,7 +40,7 @@ export default function Carousel() {
           key={index}
           sx={{
             position: 'relative',
-            height: 500,
+            height: 400,
             backgroundImage: `url(${item.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',

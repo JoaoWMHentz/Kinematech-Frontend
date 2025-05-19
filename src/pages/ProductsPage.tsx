@@ -1,109 +1,100 @@
-import { Box, Typography, TextField, Button, Slider, Checkbox, FormControlLabel, Card, CardMedia, CardContent, CardActions } from '@mui/material'
-import Grid from '@mui/material/Grid'
-const categories = [
-  'Alto Falante',
-  'Borne',
-  'Botão, Chave e Micro Chave',
-  'Bucha Isolante',
-  'Buzzer',
-  'Capacitores',
-  'Carretel e Núcleo de ferrite',
-  'Circuito Integrado',
-]
-
-const products = [
-  {
-    name: 'Resistor Carbono CR25 - 1/4W - 820K Ohms',
-    price: 'R$ 0,07',
-    image: '/images/resistor.jpg',
-    rating: 4,
-  },
-  {
-    name: 'BF254 - Transistor NPN, 20V/30mA (TO-92)',
-    price: 'R$ 0,63',
-    image: '/images/transistor.jpg',
-    rating: 5,
-  },
-  {
-    name: 'Resistor Carbono CR25 - 1/4W - 5K1 Ohms',
-    price: 'R$ 0,07',
-    image: '/images/resistor.jpg',
-    rating: 3,
-  },
-]
+import { useEffect, useState } from 'react';
+import { Box, Typography, TextField, Button, Slider, Checkbox, FormControlLabel, Paper, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent, Pagination } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { ProductService, Product, Category } from '../services/ProductService';
+import ProductCard from '../components/ProductCard'; // Importando o novo componente
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]); // Estado para categorias
+  const [loading, setLoading] = useState(true);
+  const [sortOption, setSortOption] = useState<string>(''); // Estado para a opção de ordenação
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await ProductService.getAll();
+        setProducts(response);
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const response = await ProductService.getCategories();
+        setCategories(response); // Atualiza o estado com as categorias do servidor
+      } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    };
+
+    fetchProducts();
+    fetchCategories(); // Chama a função para carregar categorias
+  }, []);
+
+  const handleSortChange = (event: SelectChangeEvent<string>) => {
+    setSortOption(event.target.value as string);
+    // Aqui você pode implementar a lógica de ordenação dos produtos
+  };
+
   return (
     <Box sx={{ display: 'flex', padding: 2 }}>
       {/* Sidebar de Filtros */}
-      <Box sx={{ width: '15%', paddingRight: 2 }}>
+      <Paper sx={{ minWidth: "200px", width: '16%', padding: 2, marginRight: 4 }}>
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          Filtros
-        </Typography>
-
-        {/* Filtros Selecionados */}
-        <Button variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
-          Remover filtros
-        </Button>
-
-        {/* Filtro por preço */}
-        <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
-          Busque por preço
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 1, marginBottom: 2 }}>
-          <TextField label="R$ Min" size="small" fullWidth />
-          <TextField label="R$ Max" size="small" fullWidth />
-          <Button variant="contained">OK</Button>
-        </Box>
-        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
-
-        {/* Filtro por categorias */}
-        <Typography variant="subtitle1" sx={{ marginTop: 3, marginBottom: 1 }}>
           Categorias
         </Typography>
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <FormControlLabel
-            key={index}
+            key={category.id}
             control={<Checkbox />}
-            label={category}
+            label={category.name}
             sx={{ display: 'block' }}
           />
         ))}
-      </Box>
+      </Paper>
 
       {/* Listagem de Produtos */}
       <Box sx={{ flex: 1 }}>
-        <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          5915 produtos encontrados para essa busca
-        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+          <Typography variant="h6">
+            {loading ? 'Carregando produtos...' : `Microcontroladores e componentes eletrônicos`}
+          </Typography>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel id="sort-label">Ordenar por</InputLabel>
+            <Select
+              labelId="sort-label"
+              value={sortOption}
+              onChange={handleSortChange}
+              label="Ordenar por"
+            >
+              <MenuItem value="price-asc">Preço: Menor para Maior</MenuItem>
+              <MenuItem value="price-desc">Preço: Maior para Menor</MenuItem>
+              <MenuItem value="name-asc">Nome: A-Z</MenuItem>
+              <MenuItem value="name-desc">Nome: Z-A</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
         <Grid container spacing={2}>
           {products.map((product, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index} {...({} as any)}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={product.image}
-                  alt={product.name}
-                />
-                <CardContent>
-                  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                    {product.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.price}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" variant="contained" color="primary">
-                    Comprar
-                  </Button>
-                </CardActions>
-              </Card>
+            <Grid item xs={12} sm={6} md={4} key={index}{...({} as any)}>
+              <ProductCard product={product} />
             </Grid>
           ))}
         </Grid>
+
+        {/* Contagem de produtos e paginador */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 2 }}>
+          <Typography variant="body1">
+            {loading ? 'Carregando produtos...' : `${products.length} produtos encontrados`}
+          </Typography>
+          <Pagination count={2} color="primary" />
+        </Box>
       </Box>
     </Box>
-  )
+  );
 }
