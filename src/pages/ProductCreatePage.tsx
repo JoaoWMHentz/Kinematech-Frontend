@@ -31,6 +31,11 @@ export default function ProductCreatePage() {
     photos: [],
     showOnHomepage: false,
     detailedDescription: '',
+    weight: 0,
+    length: 0,
+    width: 0,
+    height: 0,
+    packageInfo: { id: '', length: 0, width: 0, height: 0, maxWeight: 0, description: '' },
   });
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -55,6 +60,11 @@ export default function ProductCreatePage() {
         photos: [],
         showOnHomepage: false,
         detailedDescription: '',
+        weight: 0,
+        length: 0,
+        width: 0,
+        height: 0,
+        packageInfo: { id: '', length: 0, width: 0, height: 0, maxWeight: 0, description: '' },
       });
       fetchProducts(); // Atualiza a tabela após o cadastro
     } catch (error) {
@@ -251,6 +261,43 @@ export default function ProductCreatePage() {
               >
                 Upload Fotos Adicionais
               </Button>
+          </Grid>
+
+          <Grid item size={12} md={6} {...({} as any)}>
+            <TextField
+              fullWidth
+              label="Peso (gramas)"
+              type="number"
+              value={product.weight || ''}
+              onChange={(e) => handleChange('weight', parseFloat(e.target.value))}
+            />
+          </Grid>
+          <Grid item size={2} md={5} {...({} as any)}>
+            <TextField
+              fullWidth
+              label="Comprimento (cm)"
+              type="number"
+              value={product.length || ''}
+              onChange={(e) => handleChange('length', parseFloat(e.target.value))}
+            />
+          </Grid>
+          <Grid item size={2} md={5} {...({} as any)}>
+            <TextField
+              fullWidth
+              label="Largura (cm)"
+              type="number"
+              value={product.width || ''}
+              onChange={(e) => handleChange('width', parseFloat(e.target.value))}
+            />
+          </Grid>
+          <Grid item size={2} md={5} {...({} as any)}>
+            <TextField
+              fullWidth
+              label="Altura (cm)"
+              type="number"
+              value={product.height || ''}
+              onChange={(e) => handleChange('height', parseFloat(e.target.value))}
+            />
           </Grid>
 
           <Grid item size={12} {...({} as any)}>
