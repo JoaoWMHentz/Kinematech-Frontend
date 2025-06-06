@@ -11,6 +11,7 @@ import CartSidebarCard from './CartSidebarCard';
 import CartService from '../services/CartService';
 import { Product } from '../models/Product';
 import { Cart, CartItem } from '../models/Cart';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function CartSidebar({
@@ -22,6 +23,7 @@ export default function CartSidebar({
 }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (open) {
@@ -46,22 +48,72 @@ export default function CartSidebar({
     }
   }, [open]);
 
-  const handleIncrement = (id: string) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.product.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  const handleIncrement = async (id: string) => {
+    try {
+      const token = sessionStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Usuário não autenticado');
+      }
+
+      const item = cartItems.find((item) => item.product.id === id);
+      if (!item) {
+        throw new Error('Item não encontrado no carrinho');
+      }
+
+      const difference = 1; // Incrementa em 1
+      await CartService.addProductToCart(token, id, difference);
+
+      // Atualizar a lista de itens do carrinho
+      const cartData: Cart = await CartService.listCartItems(token);
+      setCartItems(cartData.items);
+    } catch (error) {
+      console.error('Erro ao incrementar quantidade do produto:', error);
+    }
   };
 
-  const handleDecrement = (id: string) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.product.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
+  const handleDecrement = async (id: string) => {
+    try {
+      const token = sessionStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Usuário não autenticado');
+      }
+
+      const item = cartItems.find((item) => item.product.id === id);
+      if (!item || item.quantity <= 1) {
+        throw new Error('Quantidade inválida para decremento');
+      }
+
+      const difference = -1; // Decrementa em 1
+      await CartService.addProductToCart(token, id, difference);
+
+      // Atualizar a lista de itens do carrinho
+      const cartData: Cart = await CartService.listCartItems(token);
+      setCartItems(cartData.items);
+    } catch (error) {
+      console.error('Erro ao decrementar quantidade do produto:', error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const token = sessionStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Usuário não autenticado');
+      }
+
+      await CartService.deleteProductFromCart(token, id);
+
+      // Atualizar a lista de itens do carrinho
+      const cartData: Cart = await CartService.listCartItems(token);
+      setCartItems(cartData.items);
+    } catch (error) {
+      console.error('Erro ao deletar produto do carrinho:', error);
+    }
+  };
+
+  const handleCheckout = () => {
+    navigate('/checkout');
+    onClose();
   };
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.product.price || 0) * item.quantity, 0);
@@ -83,6 +135,7 @@ export default function CartSidebar({
                 cartItem={item}
                 onIncrement={() => handleIncrement(item.product.id)}
                 onDecrement={() => handleDecrement(item.product.id)}
+                onDelete={() => handleDelete(item.product.id)}
               />
             ))
           )}
@@ -95,7 +148,7 @@ export default function CartSidebar({
             color="primary"
             fullWidth
             sx={{ marginTop: 2 }}
-            onClick={() => console.log('Continuar com a compra')}
+            onClick={handleCheckout}
           >
             Continuar com a compra
           </Button>

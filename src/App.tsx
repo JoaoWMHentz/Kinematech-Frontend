@@ -15,7 +15,7 @@ export default function App() {
       flexDirection="column"
       minHeight="100vh"
         sx={{
-        background: 'linear-gradient(to right, #e3f2fd,rgb(242, 247, 250))',
+        background: 'linear-gradient(to right,rgb(223, 242, 255),rgb(246, 248, 250))',
         py: 6,
         px: 2,
       }}

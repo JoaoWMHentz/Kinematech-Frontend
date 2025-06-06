@@ -2,16 +2,19 @@ import React from 'react';
 import { Box, Typography, Divider, IconButton } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { CartItem } from '../models/Cart';
 
 export default function CartSidebarCard({
   cartItem,
   onIncrement,
   onDecrement,
+  onDelete,
 }: {
   cartItem: CartItem;
   onIncrement: () => void;
   onDecrement: () => void;
+  onDelete: () => void;
 }) {
   return (
     <Box
@@ -28,7 +31,7 @@ export default function CartSidebarCard({
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '45% 55%',
+          gridTemplateColumns: '40% 60%',
           alignItems: 'center',
           gap: 2,
         }}
@@ -52,13 +55,16 @@ export default function CartSidebarCard({
           <Typography variant="body2" color="text.secondary">
             R$ {cartItem.product.price?.toFixed(2)}
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <IconButton size="small" onClick={onDecrement}>
               <RemoveIcon />
             </IconButton>
             <Typography>{cartItem.quantity}</Typography>
             <IconButton size="small" onClick={onIncrement}>
               <AddIcon />
+            </IconButton>
+            <IconButton size="small" color="error" onClick={onDelete}>
+              <DeleteIcon />
             </IconButton>
           </Box>
         </Box>

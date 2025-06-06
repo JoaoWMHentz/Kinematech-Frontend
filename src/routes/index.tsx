@@ -7,6 +7,7 @@ import ProductCreatePage from '../pages/ProductCreatePage'; // Importando a nova
 import RouteGuard from '../components/RouteGuard';
 import ProductPage from '../pages/ProductPage';
 import AboutKinematech from '../pages/AboutKinematech';
+import CheckoutPage from '../pages/CheckoutPage';
 
 export default function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ export default function AppRoutes() {
       <Route path="*" element={<div>404 - Página não encontrada</div>} />
       <Route path="/product/:id" element={<ProductPage />} />
       <Route path="/kinematech" element={<AboutKinematech />} />
+      <Route path="/checkout" element={<CheckoutPage />} />
       {/* Rota protegida */}
       <Route
         path="/account"
