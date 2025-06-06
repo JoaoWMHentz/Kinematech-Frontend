@@ -1,6 +1,7 @@
 import axios from 'axios';
+import backendConfig from '../config/backendConfig';
 
-const API_URL = 'http://localhost:8080/api/users'; // Substitua pela URL correta do backend
+const API_URL = `${backendConfig.baseURL}/users`; // Updated to use backendConfig
 
 // Função para login
 export const login = async (email: string, password: string) => {
@@ -25,6 +26,11 @@ export const register = async (name: string, email: string, password: string) =>
     });
     return response.data; // Retorna a mensagem de sucesso ou dados adicionais
   } catch (error: any) {
-    throw new Error(error.response?.data || 'Erro ao registrar');
+    throw new Error(error.response?.data || 'Erro ao fazer registro');
   }
+};
+
+export const isUserLoggedIn = (): boolean => {
+  const token = sessionStorage.getItem('authToken');
+  return !!token; // Returns true if token exists, otherwise false
 };

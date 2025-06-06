@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Product, ProductService } from '../services/ProductService';
+import {ProductService } from '../services/ProductService';
 import { Box, Typography, Button, CircularProgress, Grid, Paper, IconButton, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { Product } from '../models/Product';
 
 export default function ProductPage() {
     const { id } = useParams<{ id: string }>();
@@ -74,7 +75,7 @@ export default function ProductPage() {
 
     return (
         <Box sx={{ padding: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Paper sx={{ padding: 4, marginBottom: 4, maxWidth: '85vw', overflowY: 'auto' }}>
+            <Paper sx={{ padding: 4, marginBottom: 4, maxWidth: '85vw', overflowY: 'auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: 2 }}>
                 <Box sx={{ padding: 4 }}>
                     <Grid container spacing={4}>
                         {/* Galeria de Imagens */}

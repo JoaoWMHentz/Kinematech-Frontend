@@ -14,11 +14,15 @@ export default function App() {
       display="flex"
       flexDirection="column"
       minHeight="100vh"
+        sx={{
+        background: 'linear-gradient(to right, #e3f2fd,rgb(242, 247, 250))',
+        py: 6,
+        px: 2,
+      }}
     >
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Navbar onMenuClick={() => setSidebarOpen(true)} />
       <Toolbar /> {/* Compensa o espaço da AppBar */}
-      <Categories /> {/* Adiciona o componente de categorias aqui */}
       
       <Box flex="1">
         <AppRoutes />

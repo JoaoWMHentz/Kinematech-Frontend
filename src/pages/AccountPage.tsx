@@ -32,7 +32,7 @@ export default function AccountPage() {
             <Grid container spacing={3}>
                 {/* Dados Cadastrais */}
                 <Grid item xs={12} md={4} {...({} as any)}>
-                    <Paper sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Paper sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 2, backgroundColor: 'rgba(255, 255, 255, 0.8)', boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: 2 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <PersonIcon color="primary" />
                             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
@@ -59,7 +59,7 @@ export default function AccountPage() {
 
                 {/* Tipo de Cadastro */}
                 <Grid item xs={12} md={4} {...({} as any)}>
-                    <Paper sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Paper sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 2, backgroundColor: 'rgba(255, 255, 255, 0.8)', boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: 2 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <AssignmentIndIcon color="primary" />
                             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
@@ -77,7 +77,7 @@ export default function AccountPage() {
 
                 {/* Endereço Principal */}
                 <Grid item xs={12} md={4} {...({} as any)}>
-                    <Paper sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Paper sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 2, backgroundColor: 'rgba(255, 255, 255, 0.8)', boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: 2 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <HomeIcon color="primary" />
                             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>

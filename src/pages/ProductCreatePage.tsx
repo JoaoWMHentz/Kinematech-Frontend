@@ -16,8 +16,9 @@ import {
   TableRow,
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import { ProductService, Product, Category } from '../services/ProductService';
+import { ProductService } from '../services/ProductService';
 import { Margin } from '@mui/icons-material';
+import { Category, Product } from '../models/Product';
 
 export default function ProductCreatePage() {
   const [product, setProduct] = useState<Product>({
@@ -127,7 +128,7 @@ export default function ProductCreatePage() {
   };
 
   return (
-    <Box sx={{ paddingLeft: 4,paddingRight: 4, paddingTop: 0, backgroundColor: 'background.default', minHeight: '100vh' }}>
+    <Box >
       <Typography variant="h4" sx={{ marginBottom: 3, textAlign: 'left' }}>
         Cadastro de Produto
       </Typography>

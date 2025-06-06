@@ -58,8 +58,9 @@ export default function AuthPage() {
           width: '80%',
           maxWidth: 800,
           padding: 4,
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
           borderRadius: 2,
-          backgroundColor: 'white',
         }}
       >
         {/* Login Section */}

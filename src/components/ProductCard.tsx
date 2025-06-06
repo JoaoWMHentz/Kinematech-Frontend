@@ -4,7 +4,9 @@ import { Card, CardMedia, CardContent, CardActions, Button, Typography, IconButt
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { Product } from '../services/ProductService';
+import CartService from '../services/CartService';
+import { isUserLoggedIn } from '../services/authService';
+import { Product } from '../models/Product';
 
 interface ProductCardProps {
   product: Product;
@@ -19,6 +21,20 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const handleDetailsClick = () => {
     navigate(`/product/${product.id}`); // Navega para a página de detalhes do produto
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      if (!isUserLoggedIn()) {
+        throw new Error('Usuário não autenticado');
+      }
+      const token = sessionStorage.getItem('authToken');
+      await CartService.addProductToCart(token!, product.id, quantity);
+      alert('Produto adicionado ao carrinho com sucesso!');
+    } catch (error) {
+      console.error('Erro ao adicionar produto ao carrinho:', error);
+      alert('Erro ao adicionar produto ao carrinho');
+    }
   };
 
   return (
@@ -71,7 +87,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <AddIcon />
           </IconButton>
         </Box>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleAddToCart}>
           <AddShoppingCartIcon />
         </Button>
       </CardActions>

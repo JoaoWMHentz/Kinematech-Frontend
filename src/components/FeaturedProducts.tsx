@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Product, ProductService } from '../services/ProductService';
+import { ProductService } from '../services/ProductService';
 import { Box, Typography, Grid, Card, CardMedia, CardContent, CardActions, Button } from '@mui/material';
+import { Product } from '../models/Product';
 
 export default function FeaturedProducts() {
     const [products, setProducts] = useState<Product[]>([]);

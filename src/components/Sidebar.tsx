@@ -22,7 +22,7 @@ export default function Sidebar({
       <List sx={{ width: 250 }}>
         <ListItem
           component={RouterLink}
-          to="/"
+          to="/products"
           onClick={onClose}
           sx={{ cursor: 'pointer' }}
         >

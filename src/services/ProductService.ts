@@ -1,23 +1,8 @@
 import axios from 'axios';
+import backendConfig from '../config/backendConfig';
+import { Product, Category } from '../models/Product';
 
-const API_URL = 'http://localhost:8080/api/products'; // Substitua pela URL do backend
-
-export interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  price?: number;
-  category: Category;
-  thumbnail: string;
-  photos?: string[];
-  showOnHomepage: boolean;
-  detailedDescription?: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-}
+const API_URL = `${backendConfig.baseURL}/products`; // Updated to use backendConfig
 
 // Configura o axios para incluir o token JWT no cabeçalho
 const getAuthHeaders = () => {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Box, Typography, TextField, Button, Slider, Checkbox, FormControlLabel, Paper, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent, Pagination } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { ProductService, Product, Category } from '../services/ProductService';
+import { ProductService } from '../services/ProductService';
 import ProductCard from '../components/ProductCard'; // Importando o novo componente
+import { Category, Product } from '../models/Product';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -43,7 +44,7 @@ export default function ProductsPage() {
   return (
     <Box sx={{ display: 'flex', padding: 2 }}>
       {/* Sidebar de Filtros */}
-      <Paper sx={{ minWidth: "200px", width: '16%', padding: 2, marginRight: 4 }}>
+      <Paper sx={{ minWidth: "200px", width: '16%', padding: 2, marginRight: 4, backgroundColor: 'rgba(255, 255, 255, 0.8)', boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: 2 }}>
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
           Filtros
         </Typography>

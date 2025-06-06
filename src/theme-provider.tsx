@@ -49,6 +49,13 @@ export const theme = createTheme({
         },
       },
     },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+        },
+      },
+    },
   },
 });
 

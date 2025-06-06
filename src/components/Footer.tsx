@@ -1,21 +1,20 @@
 import { Phone } from '@mui/icons-material';
+
 import { Box, Typography, Grid, Link, Divider } from '@mui/material';
 
 export default function Footer() {
     return (
         <Box
             sx={{
-                backgroundColor: '#e7e7e7', // Fundo com a cor primária
-                color: '#424649', // Texto com contraste adequado
+ 
                 paddingLeft: 10, paddingRight: 10, paddingTop: 1, paddingBottom: 1,
-
             }}
         >
             <Grid container spacing={4} alignItems="flex-start" justifyContent={'left'}>
                 {/* Linha de Títulos */}
                 <Grid item size={2} {...({} as any)}>
                     <Typography variant="h6" gutterBottom>
-                        BotzStore
+                        Kinematech
                     </Typography>
                 </Grid>
                 <Grid item size={2} {...({} as any)}>
@@ -43,7 +42,7 @@ export default function Footer() {
                             href="https://wa.me/5547992486914"
                             target="_blank"
                             rel="noopener"
-                            sx={{ color: '#424649', textDecoration: 'none' }}
+                            sx={{ color: 'secondary.main', textDecoration: 'none' }}
                         >
                           <Phone sx={{ fontSize: 12 }} />
                             (47) 99248-6914
@@ -81,7 +80,7 @@ export default function Footer() {
                         <Typography variant="body2">
                             <Link
                                 href="mailto:contato@kinematech.com"
-                                sx={{ color: '#424649', textDecoration: 'none' }}
+                                sx={{ color: 'secondary.main', textDecoration: 'none' }}
                             >
                                 • contato@kinematech.com
                             </Link>
@@ -92,9 +91,9 @@ export default function Footer() {
                 </Grid>
             </Grid>
 
-            <Divider sx={{ borderColor: '#424649', marginY: 2 }} />
+            <Divider sx={{ borderColor: 'secondary.main', marginY: 2 }} />
 
-            <Typography variant="body2" align="center">
+            <Typography variant="body2" align="center" sx={{ color: 'secondary.main' }}>
                 © {new Date().getFullYear()} Kinematech. Todos os direitos reservados.
             </Typography>
         </Box>
