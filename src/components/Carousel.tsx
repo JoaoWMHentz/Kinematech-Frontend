@@ -26,42 +26,51 @@ export default function Carousel() {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    
   }
 
   return (
-    <Slider {...settings}>
-      {carouselItems.map((item, index) => (
-        <Box
-          key={index}
-          sx={{
-            position: 'relative',
-            height: 400,
-            backgroundImage: `url(${item.image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
+    <Box
+      sx={{
+        width: '100%', // Garante que o carrossel ocupe 100% da largura do contêiner pai
+        overflow: 'hidden', // Evita que o conteúdo "vaze" para fora
+      }}
+    >
+      <Slider {...settings}>
+        {carouselItems.map((item, index) => (
           <Box
+            key={index}
             sx={{
-              position: 'absolute',
-              bottom: 20,
-              left: 20,
-              color: 'white',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              padding: 2,
-              borderRadius: 1,
+              position: 'relative',
+              height: 400,
+              backgroundImage: `url(${item.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              width: '100%', // Garante que cada slide ocupe 100% da largura do carrossel
             }}
           >
-            <Typography variant="h4">{item.title}</Typography>
-            <Typography variant="subtitle1">{item.subtitle}</Typography>
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 20,
+                left: 20,
+                color: 'white',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                padding: 2,
+                borderRadius: 1,
+              }}
+            >
+              <Typography variant="h4">{item.title}</Typography>
+              <Typography variant="subtitle1">{item.subtitle}</Typography>
+            </Box>
           </Box>
-        </Box>
-      ))}
-    </Slider>
+        ))}
+      </Slider>
+    </Box>
   )
 }

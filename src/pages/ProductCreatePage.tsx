@@ -127,18 +127,13 @@ export default function ProductCreatePage() {
   };
 
   return (
-    <Box sx={{ padding: 4, backgroundColor: 'background.default', minHeight: '100vh' }}>
-      <Typography variant="h5" sx={{ marginBottom: 4, fontWeight: 'bold', textAlign: 'center' }}>
+    <Box sx={{ paddingLeft: 4,paddingRight: 4, paddingTop: 0, backgroundColor: 'background.default', minHeight: '100vh' }}>
+      <Typography variant="h4" sx={{ marginBottom: 3, textAlign: 'left' }}>
         Cadastro de Produto
       </Typography>
-      <Paper sx={{ padding: 4, marginBottom: 4 }}>
+      <Paper sx={{ padding: 4 }}>
         <Grid container spacing={4}>
           {/* Informações Básicas */}
-          <Grid size={12} item xs={12} {...({} as any)}>
-            <Typography variant="h6" sx={{ marginBottom: 2 }}>
-              Informações Básicas
-            </Typography>
-          </Grid>
           <Grid item size={2} md={5} {...({} as any)}>
             <TextField
               fullWidth
@@ -185,14 +180,9 @@ export default function ProductCreatePage() {
             />
           </Grid>
 
-          {/* Imagens */}
-          <Grid size={12} item xs={12} {...({} as any)}>
-            <Typography variant="h6" sx={{ marginBottom: 2 }}>
-              Imagens
-            </Typography>
-          </Grid>
+        
           <Grid item size={2} md={6} {...({} as any)}>
-            <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
+            <Typography variant="subtitle1" sx={{ }}>
               Thumbnail
             </Typography>
             <div>
@@ -200,11 +190,11 @@ export default function ProductCreatePage() {
                 <img
                   src={product.thumbnail}
                   alt="Thumbnail"
-                  style={{ width: '100%', maxWidth: '150px', height: 'auto', objectFit: 'cover', marginBottom: '10px' }}
+                  style={{ width: '100%', maxWidth: '150px', height: 'auto', objectFit: 'cover'}}
                 />
               )}
             </div>
-            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 1 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 0 }}>
               <input
                 id="thumbnail-upload"
                 type="file"
@@ -216,10 +206,10 @@ export default function ProductCreatePage() {
             </Box>
           </Grid>
           <Grid item size={10} md={6} {...({} as any)}>
-            <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
+            <Typography variant="subtitle1" sx={{}}>
               Fotos Adicionais
             </Typography>
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', marginBottom: 2 }}>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap'}}>
               {product.photos?.map((photo, index) => (
                 <img
                   key={index}
@@ -229,7 +219,7 @@ export default function ProductCreatePage() {
                 />
               ))}
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 1 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 0 }}>
               <input
                 id="photos-upload"
                 type="file"
@@ -261,23 +251,9 @@ export default function ProductCreatePage() {
                 Upload Fotos Adicionais
               </Button>
           </Grid>
-          <Grid size={12} item xs={12} {...({} as any)}>
-            <Typography variant="h6" sx={{ marginBottom: 2 }}>
-              Configurações
-            </Typography>
-          </Grid>
-          <Grid item  size={12} {...({} as any)}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={product.showOnHomepage}
-                  onChange={(e) => handleChange('showOnHomepage', e.target.checked)}
-                />
-              }
-              label="Exibir na Página Inicial"
-            />
-          </Grid>
+
           <Grid item size={12} {...({} as any)}>
+            
             <TextField
               fullWidth
               label="Descrição Detalhada (HTML)"
@@ -289,7 +265,16 @@ export default function ProductCreatePage() {
           </Grid>
 
           {/* Botão de Ação */}
-          <Grid size={12} item xs={12} sx={{ textAlign: 'right' }} {...({} as any)}>
+          <Grid size={12} item xs={12} sx={{ display: "flex", justifyContent: "space-between" }} {...({} as any)}>
+             <FormControlLabel
+              control={
+                <Switch
+                  checked={product.showOnHomepage}
+                  onChange={(e) => handleChange('showOnHomepage', e.target.checked)}
+                />
+              }
+              label="Exibir na Página Inicial"
+            />
             <Button  sx={{ color: 'white' }} variant="contained" color="primary" onClick={handleSubmit}>
               {product.id ? 'Atualizar Produto' : 'Cadastrar Produto'}
             </Button>
@@ -298,7 +283,7 @@ export default function ProductCreatePage() {
       </Paper>
 
       {/* Tabela de Produtos */}
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
+      <Typography variant="h6" sx={{ marginBottom: 2, marginTop: 2}}>
         Produtos Cadastrados
       </Typography>
       <Box sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>

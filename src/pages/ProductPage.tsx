@@ -236,9 +236,12 @@ export default function ProductPage() {
 
                     <Box sx={{ marginTop: 4 }}>
                         <Typography variant="h5">Descrição Detalhada</Typography>
-                        <Typography variant="body1" sx={{ marginTop: 2 }}>
-                            {product.detailedDescription || 'Nenhuma descrição detalhada disponível.'}
-                        </Typography>
+                        <Box
+                            sx={{ marginTop: 2 }}
+                            dangerouslySetInnerHTML={{
+                                __html: product.detailedDescription || '<p>Nenhuma descrição detalhada disponível.</p>',
+                            }}
+                        />
                     </Box>
                 </Box>
             </Paper>

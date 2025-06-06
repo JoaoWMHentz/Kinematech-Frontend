@@ -45,6 +45,26 @@ export default function ProductsPage() {
       {/* Sidebar de Filtros */}
       <Paper sx={{ minWidth: "200px", width: '16%', padding: 2, marginRight: 4 }}>
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
+          Filtros
+        </Typography>
+
+        {/* Filtros Selecionados */}
+        <Button variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
+          Remover filtros
+        </Button>
+
+        {/* Filtro por preço */}
+        <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
+          Busque por preço
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 1, marginBottom: 2 }}>
+          <TextField label="R$ Min" size="small" fullWidth />
+          <TextField label="R$ Max" size="small" fullWidth />
+          <Button variant="contained" size='small'>OK</Button>
+        </Box>
+        <Slider defaultValue={50} aria-label="Default" valueLabelDisplay="auto" />
+
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
           Categorias
         </Typography>
         {categories.map((category) => (

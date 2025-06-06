@@ -1,15 +1,12 @@
-import { Container } from '@mui/material'
-import Carousel from '../components/Carousel'
-import Categories from '../components/Categories'
+import { Container } from '@mui/material';
+import Carousel from '../components/Carousel';
+import FeaturedProducts from '../components/FeaturedProducts';
 
 export default function Home() {
   return (
     <>
-     
       <Carousel />
-      <Container>
-        {/* Conteúdo adicional da página */}
-      </Container>
+        <FeaturedProducts />
     </>
-  )
+  );
 }

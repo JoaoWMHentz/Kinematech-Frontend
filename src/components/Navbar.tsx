@@ -18,7 +18,7 @@ export default function Navbar({ onMenuClick }: { onMenuClick: () => void }) {
 
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: 'background.default', color: 'secundary.main', paddingX: 2 }}>
+    <AppBar position="fixed" sx={{ backgroundColor: 'background.default', color: 'secundary.main', maxWidth: '100vw' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         {/* Logo */}
         <Box
