@@ -24,25 +24,27 @@ export default function CartSidebar({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        setLoading(true);
-        const token = sessionStorage.getItem('authToken');
-        if (!token) {
-          throw new Error('Usuário não autenticado');
+    if (open) {
+      const fetchCartItems = async () => {
+        try {
+          setLoading(true);
+          const token = sessionStorage.getItem('authToken');
+          if (!token) {
+            throw new Error('Usuário não autenticado');
+          }
+          const cartData: Cart = await CartService.listCartItems(token);
+          console.log('Itens do carrinho:', cartData.items);
+          setCartItems(cartData.items);
+        } catch (error) {
+          console.error('Erro ao carregar itens do carrinho:', error);
+        } finally {
+          setLoading(false);
         }
-        const cartData:Cart= await CartService.listCartItems(token);
-        console.log('Itens do carrinho:', cartData.items);
-        setCartItems(cartData.items);
-      } catch (error) {
-        console.error('Erro ao carregar itens do carrinho:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    fetchCartItems();
-  }, []);
+      fetchCartItems();
+    }
+  }, [open]);
 
   const handleIncrement = (id: string) => {
     setCartItems((prevItems) =>

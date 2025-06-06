@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {ProductService } from '../services/ProductService';
+import { ProductService } from '../services/ProductService';
+import CartService from '../services/CartService';
 import { Box, Typography, Button, CircularProgress, Grid, Paper, IconButton, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { Product } from '../models/Product';
+import CartSidebar from '../components/CartSidebar';
 
 export default function ProductPage() {
     const { id } = useParams<{ id: string }>();
@@ -15,7 +17,10 @@ export default function ProductPage() {
     const [quantity, setQuantity] = useState(1);
     const [zipCode, setZipCode] = useState('');
     const [shippingOptions, setShippingOptions] = useState<{ carrier: string; price: number; deliveryTime: string }[] | null>(null);
+    const [cartOpen, setCartOpen] = useState(false);
 
+
+    
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -43,6 +48,29 @@ export default function ProductPage() {
             { carrier: 'Transportadora C', price: 25.0, deliveryTime: '2-4 dias úteis' },
         ];
         setShippingOptions(options);
+    };
+
+    const handleAddToCart = async () => {
+        try {
+            const token = sessionStorage.getItem('authToken');
+            if (!token) {
+                throw new Error('Usuário não autenticado');
+            }
+
+            if (!product) {
+                throw new Error('Produto não encontrado');
+            }
+
+            // Adicionar o produto ao carrinho usando o CartService
+            await CartService.addProductToCart(token, product.id, quantity);
+
+            console.log('Produto adicionado ao carrinho');
+
+            // Abrir a barra lateral do carrinho
+            setCartOpen(true);
+        } catch (error) {
+            console.error('Erro ao adicionar produto ao carrinho:', error);
+        }
     };
 
     if (loading) {
@@ -169,15 +197,20 @@ export default function ProductPage() {
                                     >
                                         <AddIcon />
                                     </IconButton>
-                                <Typography variant="body2" color="text.secondary">
-                                    Em estoque: {stock}
-                                </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Em estoque: {stock}
+                                    </Typography>
                                 </Box>
                                 <Box sx={{ display: 'flex', gap: 2 }}>
                                     <Button variant="contained" color="primary" size="large">
                                         Comprar agora
                                     </Button>
-                                    <Button variant="outlined" color="primary" size="large">
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        size="large"
+                                        onClick={handleAddToCart}
+                                    >
                                         Adicionar ao carrinho
                                     </Button>
                                 </Box>
@@ -246,6 +279,9 @@ export default function ProductPage() {
                     </Box>
                 </Box>
             </Paper>
+
+            {/* Barra lateral do carrinho */}
+            <CartSidebar open={cartOpen} onClose={() => setCartOpen(false)} />
         </Box>
     );
 }

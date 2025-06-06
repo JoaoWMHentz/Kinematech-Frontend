@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CartService from '../services/CartService';
 import { isUserLoggedIn } from '../services/authService';
 import { Product } from '../models/Product';
+import CartSidebar from './CartSidebar';
 
 interface ProductCardProps {
   product: Product;
@@ -15,7 +16,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate(); // Hook para navegação
-
+  const [cartOpen, setCartOpen] = useState(false);
   const handleIncrement = () => setQuantity((prev) => prev + 1);
   const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
@@ -30,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       }
       const token = sessionStorage.getItem('authToken');
       await CartService.addProductToCart(token!, product.id, quantity);
-      alert('Produto adicionado ao carrinho com sucesso!');
+      setCartOpen(true);
     } catch (error) {
       console.error('Erro ao adicionar produto ao carrinho:', error);
       alert('Erro ao adicionar produto ao carrinho');
@@ -91,7 +92,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <AddShoppingCartIcon />
         </Button>
       </CardActions>
-      
+       <CartSidebar open={cartOpen} onClose={() => setCartOpen(false)} />
     </Card>
   );
 }
