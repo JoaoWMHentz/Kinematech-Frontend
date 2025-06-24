@@ -17,12 +17,13 @@ export const login = async (email: string, password: string) => {
 };
 
 // Função para registro
-export const register = async (name: string, email: string, password: string) => {
+export const register = async (name: string, email: string, password: string, document: string) => {
   try {
     const response = await axios.post(`${API_URL}/register`, {
       name,
       email,
       password,
+      document,
     });
     return response.data; // Retorna a mensagem de sucesso ou dados adicionais
   } catch (error: any) {

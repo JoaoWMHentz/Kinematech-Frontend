@@ -1,8 +1,12 @@
+import { Customer } from "./Customer";
+
 export interface User {
   id: string;
-  name: string;
   email: string;
+  password?: string;
+  salt?: string;
   active: boolean;
-  customer?: string | null;
+  emailVerificationToken?: string;
+  tokenExpiration?: number;
+  customer?: Customer | null;
 }
-

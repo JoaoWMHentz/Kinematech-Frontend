@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# BotzStore Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Integrantes
 
-## Available Scripts
+- João Witor Müller Hentz
+## Sobre a Aplicação
 
-In the project directory, you can run:
+BotzStore é uma aplicação de frontend para uma loja virtual, desenvolvida em React e TypeScript, com o objetivo de proporcionar uma experiência de compra moderna e eficiente.
 
-### `npm start`
+## Objetivo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Oferecer uma plataforma intuitiva para que usuários possam navegar, visualizar produtos, adicionar itens ao carrinho, realizar autenticação e finalizar compras.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Principais requisitos e/ou casos de uso implementados
 
-### `npm test`
+- Exibição de produtos em destaque e por categoria
+- Página de detalhes de produtos
+- Carrinho de compras com gerenciamento de itens
+- Autenticação de usuários
+- Páginas de checkout e criação de produtos
+- Navegação protegida por autenticação
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Descrição das principais classes e telas e seu funcionamento
 
-### `npm run build`
+### Componentes
+- `ProductCard.tsx`: Exibe informações resumidas de um produto.
+- `CartSidebar.tsx` e `CartSidebarCard.tsx`: Gerenciam e exibem o carrinho de compras.
+- `Categories.tsx`: Lista categorias disponíveis.
+- `FeaturedProducts.tsx`: Mostra produtos em destaque.
+- `Navbar.tsx` e `Footer.tsx`: Navegação principal e rodapé.
+- `RouteGuard.tsx`: Protege rotas que exigem autenticação.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Páginas
+- `Home.tsx`: Página inicial com destaques e categorias.
+- `ProductsPage.tsx`: Lista de produtos.
+- `ProductPage.tsx`: Detalhes de um produto selecionado.
+- `CheckoutPage.tsx`: Processo de finalização de compra.
+- `AuthPage.tsx`: Tela de login/autenticação.
+- `AccountPage.tsx`: Gerenciamento de conta do usuário.
+- `ProductCreatePage.tsx`: Cadastro de novos produtos (para administradores).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Serviços e Modelos
+- `services/`: Comunicação com backend para produtos, usuários, carrinho, endereços e autenticação.
+- `models/`: Estruturas de dados para Produto, Usuário, Carrinho, Cliente e Endereço.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Como Executar
 
-### `npm run eject`
+1. Certifique-se de ter o Node.js instalado.
+2. Instale as dependências com `npm install`.
+3. Inicie o servidor de desenvolvimento com `npm start`.
+4. Acesse a aplicação em `http://localhost:3000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Tecnologias Utilizadas
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React
+- TypeScript
+- CSS
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contribuição

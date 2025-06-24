@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import HomeIcon from '@mui/icons-material/Home';
+import { UserService } from '../services/userService';
+import { getAddressByCustomerId } from '../services/addressService';
+import { Address } from '../models/Address';
 
 export default function AccountPage() {
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [user, setUser] = useState<any>(null);
+    const [addresses, setAddresses] = useState<any[]>([]);
 
     useEffect(() => {
         const token = sessionStorage.getItem('authToken');
@@ -16,12 +21,35 @@ export default function AccountPage() {
         } else {
             const email = 'user@example.com'; // Substitua por lógica real de decodificação
             setUserEmail(email);
+
+            // Fetch user data
+            UserService.getUserByEmail(email).then((userData) => {
+                setUser(userData);
+
+                // Fetch addresses associated with the user
+                if (userData.customer) {
+                    getAddressByCustomerId(userData.customer.id).then((addressData: Address) => {
+                        setAddresses([addressData]);
+                    });
+                }
+            });
         }
     }, [navigate]);
 
     const handleLogout = () => {
         sessionStorage.removeItem('authToken');
         navigate('/auth');
+    };
+
+    const handleSaveUser = () => {
+        if (user) {
+            UserService.updateUser(user).then(() => {
+                alert('User information updated successfully');
+            }).catch((error) => {
+                console.error(error);
+                alert('Failed to update user information');
+            });
+        }
     };
 
     return (
